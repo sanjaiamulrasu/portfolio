@@ -65,7 +65,7 @@ const Skills = () => {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 mb-16">
+                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 mb-16">
                     {skills.map((skill, index) => (
                         <motion.div
                             key={index}
@@ -82,7 +82,11 @@ const Skills = () => {
                 </div>
             </div>
 
-            <div className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)] py-8">
+            <div className="w-full relative overflow-hidden py-8">
+                {/* Gradient Overlays for smooth fading edges */}
+                <div className="absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-gray-950 to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-24 md:w-48 bg-gradient-to-l from-gray-950 to-transparent z-10 pointer-events-none" />
+
                 <div className="flex items-center justify-center gap-8 animate-scroll hover:[animation-play-state:paused]">
                     {skills.map((skill, index) => (
                         <SkillLogo key={`orig-${index}`} skill={skill} />

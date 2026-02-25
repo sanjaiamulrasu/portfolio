@@ -18,39 +18,51 @@ const Earth = ({
 
     useEffect(() => {
         let width = 0;
-        const onResize = () =>
-            canvasRef.current && (width = canvasRef.current.offsetWidth);
-        window.addEventListener('resize', onResize);
-        onResize();
-        let phi = 0;
+        const updateWidth = () => {
+            if (canvasRef.current) {
+                width = canvasRef.current.offsetWidth;
+            }
+        };
 
-        const globe = createGlobe(canvasRef.current, {
-            devicePixelRatio: 2,
-            width: width * 2,
-            height: width * 2,
-            phi: 0,
-            theta: theta,
-            dark: dark,
-            scale: scale,
-            diffuse: diffuse,
-            mapSamples: mapSamples,
-            mapBrightness: mapBrightness,
-            baseColor: baseColor,
-            markerColor: markerColor,
-            glowColor: glowColor,
-            opacity: 1,
-            offset: [0, 0],
-            markers: markers,
-            onRender: (state) => {
-                // Continuous rotation
-                state.phi = phi;
-                phi += 0.005;
-            },
-        });
+        updateWidth();
+        window.addEventListener('resize', updateWidth);
+
+        let phi = 0;
+        let globe;
+
+        // Use a small delay to ensure offsetWidth is correctly calculated after mount
+        const timer = setTimeout(() => {
+            if (!canvasRef.current) return;
+            updateWidth();
+
+            globe = createGlobe(canvasRef.current, {
+                devicePixelRatio: 2,
+                width: width * 2 || 600,
+                height: width * 2 || 600,
+                phi: 0,
+                theta: theta,
+                dark: dark,
+                scale: scale,
+                diffuse: diffuse,
+                mapSamples: mapSamples,
+                mapBrightness: mapBrightness,
+                baseColor: baseColor,
+                markerColor: markerColor,
+                glowColor: glowColor,
+                opacity: 1,
+                offset: [0, 0],
+                markers: markers,
+                onRender: (state) => {
+                    state.phi = phi;
+                    phi += 0.005;
+                },
+            });
+        }, 100);
 
         return () => {
-            globe.destroy();
-            window.removeEventListener('resize', onResize);
+            if (globe) globe.destroy();
+            window.removeEventListener('resize', updateWidth);
+            clearTimeout(timer);
         };
     }, [theta, dark, scale, diffuse, mapSamples, mapBrightness, baseColor, markerColor, glowColor, markers]);
 
