@@ -10,8 +10,8 @@ import DeepSpace from './components/DeepSpace';
 
 function App() {
     return (
-        <div className="relative min-h-screen">
-            <div className="fixed inset-0 z-0">
+        <div className="relative w-full overflow-x-hidden">
+            <div className="fixed inset-0 z-0 pointer-events-none select-none">
                 <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
                     <Suspense fallback={null}>
                         <ambientLight intensity={0.3} />
@@ -22,7 +22,7 @@ function App() {
                 </Canvas>
             </div>
 
-            <div className="fixed inset-0 grid-bg opacity-20 z-0" />
+            <div className="fixed inset-0 grid-bg opacity-20 z-0 pointer-events-none select-none" />
 
             <Navigation />
 
