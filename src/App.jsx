@@ -32,13 +32,12 @@ function App() {
                 <Projects />
                 <Skills />
 
-
                 <Contact />
             </main>
 
             <footer className="relative z-10 py-8 text-center border-t border-white/10">
                 <p className="text-gray-400">
-                    © 2026 Sanjai. All rights reserved. Built with React.
+                    © 2026 Sanjai. Built with React.
                 </p>
             </footer>
         </div>

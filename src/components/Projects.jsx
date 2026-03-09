@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
 const Projects = () => {
+    const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     const [ref, inView] = useInView({
         triggerOnce: true,
         threshold: 0.1,
@@ -23,7 +30,7 @@ const Projects = () => {
                 "CSS",
                 "SQL"
             ],
-            github: "https://github.com/sanjaiamulrasu",
+            github: "https://github.com/sanjaiamulrasu/Face-login-system",
             gradient: "from-indigo-500 to-indigo-700",
         },
         {
@@ -38,7 +45,7 @@ const Projects = () => {
                 "XGBoost",
                 "Matplotlib"
             ],
-            github: "https://github.com/sanjaiamulrasu",
+            github: "https://github.com/sanjaiamulrasu/Finance-assistant-calculator-",
             gradient: "from-purple-500 to-purple-700",
         },
         {
@@ -50,7 +57,42 @@ const Projects = () => {
                 "HTML",
                 "CSS"
             ],
-            github: "https://github.com/sanjaiamulrasu",
+            github: "https://github.com/sanjaiamulrasu/Pok-mon-duel-cardgame",
+            gradient: "from-blue-500 to-blue-700",
+        },
+        {
+            title: "Smart Library Management System",
+            description:
+                "Developed a full-stack library management system to manage books, users, and borrowing operations. Implemented JWT-based role authentication (Admin, Staff, User) with features like issuing, returns, due extensions, and real-time tracking using React, Spring Boot, and MySQL.",
+            tech: [
+                "React",
+                "Java",
+                "Spring Boot",
+                "Spring Security",
+                "JWT",
+                "MySQL",
+                "REST API",
+                "Tailwind CSS"
+            ],
+            github: "https://github.com/sanjaiamulrasu/library-management",
+            gradient: "from-purple-500 to-purple-700",
+        },
+        {
+            title: "Smart Curriculum Activity & Attendance Monitoring System",
+            description:
+                "Developed a smart academic monitoring system for automated attendance and curriculum tracking using QR check-ins. Implemented role-based dashboards, leave approval, and analytics to monitor student engagement with secure backend integration.",
+            tech: [
+                "React",
+                "Java",
+                "Spring Boot",
+                "REST API",
+                "MySQL",
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "JWT Authentication"
+            ],
+            github: "https://github.com/sanjaiamulrasu/smart-curriculum",
             gradient: "from-blue-500 to-blue-700",
         },
     ];
@@ -79,32 +121,34 @@ const Projects = () => {
                         </p>
                     </motion.div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div
+                        className="flex gap-6 overflow-x-auto"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+                    >
                         {projects.map((project, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 50 }}
                                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                                transition={{ duration: 0.6, delay: index * 0.2 }}
+                                transition={{ duration: 0.6, delay: index * 0.15 }}
                                 whileHover={{ y: -10 }}
-                                className="group"
+                                className="group flex-shrink-0"
+                                style={{ width: isMobile ? 'calc(100vw - 2rem)' : 'calc((100vw - 8rem) / 3 - 1rem)' }}
                             >
                                 <div className="relative p-8 rounded-xl h-full flex flex-col overflow-hidden bg-white/5 border border-white/10 transition-all duration-300 hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]">
 
                                     <div className={`absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br ${project.gradient} rounded-full scale-100 group-hover:scale-[20] transition-transform duration-700 ease-in-out z-0 opacity-20 group-hover:opacity-100`} />
-
-
 
                                     <div className="relative z-10 flex flex-col h-full">
                                         <div className="text-5xl font-bold text-white/5 mb-4 font-display group-hover:text-white/20 transition-colors">
                                             0{index + 1}
                                         </div>
 
-                                        <h3 className="text-3xl font-bold text-white mb-4 font-display leading-tight">
+                                        <h3 className="text-xl font-bold text-white mb-4 font-display leading-tight">
                                             {project.title}
                                         </h3>
 
-                                        <p className="text-gray-400 group-hover:text-white/90 transition-colors mb-8 leading-relaxed flex-grow">
+                                        <p className="text-gray-400 group-hover:text-white/90 transition-colors mb-8 leading-relaxed flex-grow text-sm">
                                             {project.description}
                                         </p>
 
@@ -112,7 +156,7 @@ const Projects = () => {
                                             {project.tech.map((tech, idx) => (
                                                 <span
                                                     key={idx}
-                                                    className="px-3 py-1 text-sm bg-white/5 border border-white/10 rounded-full text-indigo-200 group-hover:bg-white/10 group-hover:text-white transition-colors"
+                                                    className="px-3 py-1 text-xs bg-white/5 border border-white/10 rounded-full text-indigo-200 group-hover:bg-white/10 group-hover:text-white transition-colors"
                                                 >
                                                     {tech}
                                                 </span>
