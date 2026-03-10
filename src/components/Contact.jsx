@@ -10,7 +10,7 @@ const Contact = () => {
     });
 
     const erodeMarker = {
-        location: [11.3410, 77.7172], 
+        location: [11.3410, 77.7172],
         size: 0.08,
     };
 
@@ -65,12 +65,11 @@ const Contact = () => {
                         className="text-center mb-16"
                     >
                         <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 font-display">
-                            Get In Touch
+                            Connect With Me
                         </h2>
                         <div className="w-20 h-1 bg-indigo-500 mx-auto mb-4" />
                         <p className="text-gray-400 max-w-2xl mx-auto">
-                            Let's discuss your next project or collaboration opportunity
-                        </p>
+                            You can reach me through the following platforms.                        </p>
                     </motion.div>
 
                     <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">

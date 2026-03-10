@@ -1,25 +1,30 @@
-import React, { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import React from 'react';
 import Hero from './components/Hero';
 import About from './components/About';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Navigation from './components/Navigation';
-import DeepSpace from './components/DeepSpace';
+import Galaxy from './components/Galaxy';
 
 function App() {
     return (
         <div className="relative w-full overflow-x-hidden">
             <div className="fixed inset-0 z-0 pointer-events-none select-none">
-                <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-                    <Suspense fallback={null}>
-                        <ambientLight intensity={0.3} />
-                        <pointLight position={[10, 10, 10]} color="#7dd3fc" intensity={1.5} />
-                        <pointLight position={[-10, -10, -10]} color="#6366f1" intensity={1.2} />
-                        <DeepSpace />
-                    </Suspense>
-                </Canvas>
+                <Galaxy 
+                    mouseRepulsion={false}
+                    mouseInteraction={false}
+                    density={1.2}
+                    glowIntensity={0.2}
+                    saturation={0}
+                    hueShift={120}
+                    twinkleIntensity={0.1}
+                    rotationSpeed={0.05}
+                    repulsionStrength={1.5}
+                    autoCenterRepulsion={0}
+                    starSpeed={0.5}
+                    speed={1}
+                />
             </div>
 
             <div className="fixed inset-0 grid-bg opacity-20 z-0 pointer-events-none select-none" />

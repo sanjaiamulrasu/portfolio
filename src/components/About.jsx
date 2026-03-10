@@ -144,18 +144,23 @@ const About = () => {
                                         <h3 className="text-lg font-bold text-indigo-300">Professional Summary</h3>
                                     </div>
 
-                                    <p className="text-gray-300 leading-7 text-sm mb-4 max-w-prose">
-                                        I am a final-year Artificial Intelligence and Data Science student with a strong interest 
-                                        in building data-driven solutions and intelligent applications. 
-                                        I have experience working with Python, JavaScript, and modern web technologies, 
-                                        along with data analysis and machine learning tools such as Pandas, NumPy, Scikit-learn, and TensorFlow.
-                                    </p>
-                                    <p className="text-gray-300 leading-7 text-sm mb-6 max-w-prose">
-                                        I enjoy developing web applications and working on data cleaning, 
-                                        exploratory data analysis, and machine learning model development. 
-                                        I am also interested in applying my knowledge to solve real-world problems through AI,
-                                        data analytics, and modern software development practices.
-                                    </p>
+                                    <div className="font-['Outfit','Inter',sans-serif]">
+                                        <p className="text-gray-300 leading-relaxed text-base mb-4 max-w-prose">
+                                            I am a final-year Artificial Intelligence and Data Science student with a strong interest 
+                                            in building data-driven solutions and intelligent applications. I have experience working 
+                                            with Python, JavaScript, and modern web technologies, along with data analysis and machine 
+                                            learning tools such as Pandas, NumPy, Scikit-learn, and TensorFlow. I enjoy applying these
+                                            technologies to develop practical projects and continuously explore new tools and techniques
+                                            to improve my skills in AI and software development.
+                                        </p>
+                                        <p className="text-gray-300 leading-relaxed text-base mb-6 max-w-prose">
+                                            I enjoy developing web applications and working on data cleaning, exploratory data analysis, 
+                                            and machine learning model development. I am also interested in applying my knowledge to solve
+                                            real-world problems through AI, data analytics, and modern software development practices. 
+                                            I am continuously learning new technologies and improving my problem-solving skills to build 
+                                            more efficient and scalable solutions.
+                                        </p>
+                                    </div>
 
                                     <div className="flex flex-wrap gap-2">
                                         {['Full Stack Development','Data Analysis','Machine Learning','AI Solutions','DevOps Tools'].map((tag, i) => (

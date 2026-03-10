@@ -1,15 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
 const Projects = () => {
     const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const scrollRef = useRef(null);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 768);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    const handleScroll = () => {
+        if (!scrollRef.current) return;
+        const { scrollLeft, clientWidth } = scrollRef.current;
+        const index = Math.round(scrollLeft / clientWidth);
+        setActiveIndex(index);
+    };
     const [ref, inView] = useInView({
         triggerOnce: true,
         threshold: 0.1,
@@ -75,7 +84,7 @@ const Projects = () => {
                 "Tailwind CSS"
             ],
             github: "https://github.com/sanjaiamulrasu/library-management",
-            gradient: "from-purple-500 to-purple-700",
+            gradient: "from-emerald-500 to-emerald-700",
         },
         {
             title: "Smart Curriculum Activity & Attendance Monitoring System",
@@ -93,7 +102,7 @@ const Projects = () => {
                 "JWT Authentication"
             ],
             github: "https://github.com/sanjaiamulrasu/smart-curriculum",
-            gradient: "from-blue-500 to-blue-700",
+            gradient: "from-orange-500 to-orange-700",
         },
     ];
 
@@ -122,8 +131,10 @@ const Projects = () => {
                     </motion.div>
 
                     <div
+                        ref={scrollRef}
+                        onScroll={handleScroll}
                         className="flex gap-6 overflow-x-auto"
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch', scrollSnapType: isMobile ? 'x mandatory' : 'none' }}
                     >
                         {projects.map((project, index) => (
                             <motion.div
@@ -133,7 +144,7 @@ const Projects = () => {
                                 transition={{ duration: 0.6, delay: index * 0.15 }}
                                 whileHover={{ y: -10 }}
                                 className="group flex-shrink-0"
-                                style={{ width: isMobile ? 'calc(100vw - 2rem)' : 'calc((100vw - 8rem) / 3 - 1rem)' }}
+                                style={{ width: isMobile ? 'calc(100vw - 2rem)' : 'calc((100vw - 8rem) / 3 - 1rem)', scrollSnapAlign: isMobile ? 'start' : 'none' }}
                             >
                                 <div className="relative p-8 rounded-xl h-full flex flex-col overflow-hidden bg-white/5 border border-white/10 transition-all duration-300 hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]">
 
@@ -182,36 +193,33 @@ const Projects = () => {
                         ))}
                     </div>
 
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={inView ? { opacity: 1 } : {}}
-                        transition={{ duration: 0.6, delay: 0.8 }}
-                        className="text-center mt-12"
-                    >
-                        <motion.a
-                            href="https://github.com/sanjaiamulrasu"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.05 }}
-                            className="inline-flex items-center gap-2 px-8 py-4 glass glass-hover rounded-lg font-semibold text-white border border-purple-500/50"
-                        >
-                            View All Projects
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    {/* Mobile dot indicators */}
+                    {isMobile && (
+                        <div className="flex justify-center gap-2 mt-6">
+                            {projects.map((_, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => {
+                                        if (!scrollRef.current) return;
+                                        const cardWidth = scrollRef.current.clientWidth;
+                                        scrollRef.current.scrollTo({ left: cardWidth * idx, behavior: 'smooth' });
+                                    }}
+                                    style={{
+                                        width: activeIndex === idx ? '24px' : '8px',
+                                        height: '8px',
+                                        borderRadius: '9999px',
+                                        background: activeIndex === idx ? 'rgb(129,140,248)' : 'rgba(255,255,255,0.2)',
+                                        border: 'none',
+                                        padding: 0,
+                                        cursor: 'pointer',
+                                        transition: 'all 0.3s ease',
+                                    }}
                                 />
-                            </svg>
-                        </motion.a>
-                    </motion.div>
+                            ))}
+                        </div>
+                    )}
+
+
                 </motion.div>
             </div>
         </section>
